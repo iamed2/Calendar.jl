@@ -188,14 +188,14 @@ end
 
 abstract AbstractCalendarDuration
 
-type CalendarDuration <: AbstractCalendarDuration
+immutable CalendarDuration <: AbstractCalendarDuration
     years::Int
     months::Int
     weeks::Int
     millis::Float64
 end
 
-type FixedCalendarDuration <: AbstractCalendarDuration
+immutable FixedCalendarDuration <: AbstractCalendarDuration
     millis::Float64
 end
 
@@ -350,7 +350,7 @@ for op in [:<, :(==)]
     end
 end
 
-type CalendarTimeRange{T<:AbstractCalendarDuration} <: Ranges{CalendarTime}
+immutable CalendarTimeRange{T<:AbstractCalendarDuration} <: Ranges{CalendarTime}
     start::CalendarTime
     step::T
     len::Int
