@@ -15,6 +15,7 @@ export CalendarTime,
        # tests
        isAM,
        isPM,
+       isdst,
        isleapyear,
 
        # fields
@@ -183,6 +184,12 @@ isAM(t::CalendarTime) = !isPM(t)
 
 @deprecate am isAM
 @deprecate pm isPM
+
+function isdst(t::CalendarTime)
+    ICU.setMillis(t.cal, t.millis)
+    ICU.get(t.cal, ICU.UCAL_DST_OFFSET) != 0
+end
+@vectorize_1arg CalendarTime isdst
 
 for op in [:<, :(==), :isless]
     @eval ($op)(t1::CalendarTime, t2::CalendarTime) = ($op)(t1.millis, t2.millis)
